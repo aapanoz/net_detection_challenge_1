@@ -1,0 +1,22 @@
+services:
+  node-a:
+    image: ${DOCKERHUB_USER:-naasbind}/lab-part-a:${CHALLENGE_TAG:-latest}
+    depends_on:
+      - node-b
+    stdin_open: true
+    tty: true
+    networks:
+      - isolated
+
+  node-b:
+    image: ${DOCKERHUB_USER:-naasbind}/lab-part-b:${CHALLENGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - isolated
+      - dashboard
+
+networks:
+  isolated:
+    internal: true
+  dashboard: {}
